@@ -61,10 +61,10 @@ Untuk bahasa PHP, ada 4 fitur yang tersedia
 # Dokumentasi
 
 # Cpp
-![Menu](CPP/Dokumentasi/Menu%20Cpp.png) 
-![Add](CPP/Dokumentasi/Add%20Cpp.png) 
-![Display](CPP/Dokumentasi/Display%20After%20Add%20Cpp.png) 
-![Exit](CPP/Dokumentasi/Exit%20Cpp.png) 
+![Menu](Cpp/Dokumentasi/Menu%20Cpp.png) 
+![Add](Cpp/Dokumentasi/Add%20Cpp.png) 
+![Display](Cpp/Dokumentasi/Display%20After%20Add%20Cpp.png) 
+![Exit](Cpp/Dokumentasi/Exit%20Cpp.png) 
 
 # Java
 ![Menu](Java/Dokumentasi/Menu%20Java.png) 
