@@ -1,12 +1,13 @@
 <?php
 require_once "Laptop.php";
 
+// LaptopGaming is a subclass of Laptop, specifically for gaming laptops
 class LaptopGaming extends Laptop {
-    private $gpu;
-    private $cooler;
-    private $refreshRate;
-    private $image; // tambahan atribut gambar
+    private $gpu;          // GPU type
+    private $cooler;       // Cooling system
+    private $refreshRate;  // Screen refresh rate
 
+    // Constructor with default values
     public function __construct(
         $id = 0,
         $name = "",
@@ -21,33 +22,34 @@ class LaptopGaming extends Laptop {
         $refreshRate = 0,
         $image = ""
     ) {
-        parent::__construct($id, $name, $brand, $price, $processor, $ram, $battery, $warranty);
+        // Call parent constructor from Laptop
+        parent::__construct($id, $name, $brand, $price, $processor, $ram, $battery, $warranty, $image);
         $this->gpu = $gpu;
         $this->cooler = $cooler;
         $this->refreshRate = $refreshRate;
-        $this->image = $image;
     }
 
-    // Getter
+    // Getters
     public function getGpu() { return $this->gpu; }
     public function getCooler() { return $this->cooler; }
     public function getRefreshRate() { return $this->refreshRate; }
-    public function getImage() { return $this->image; }
 
-    // Setter
+    // Setters
     public function setGpu($gpu) { $this->gpu = $gpu; }
     public function setCooler($cooler) { $this->cooler = $cooler; }
     public function setRefreshRate($refreshRate) { $this->refreshRate = $refreshRate; }
-    public function setImage($image) { $this->image = $image; }
-
-    // Method untuk menampilkan card
+    // Method to display a laptop card with details
     public function displayCard($index) {
         echo "<div class='card'>";
-        if ($this->image) {
-            echo "<img src='uploads/" . htmlspecialchars($this->image) . "' alt='Laptop Image' style='width:100%; border-radius:5px; margin-bottom:10px;'>";
+
+        // Display laptop image if available, otherwise show placeholder
+        if ($this->getImage()) {
+            echo "<img src='uploads/" . htmlspecialchars($this->getImage()) . "' alt='Laptop Image' style='width:100%; border-radius:5px; margin-bottom:10px;'>";
         } else {
             echo "<div style='width:100%; height:150px; background:#ddd; border-radius:5px; display:flex; align-items:center; justify-content:center;'>No Image</div>";
-        }
+        }   
+
+        // Display laptop information
         echo "<h3>" . htmlspecialchars($this->getName()) . "</h3>";
         echo "<p><strong>Brand:</strong> " . htmlspecialchars($this->getBrand()) . "</p>";
         echo "<p><strong>Price:</strong> Rp " . number_format($this->getPrice(), 0, ',', '.') . "</p>";
@@ -59,6 +61,7 @@ class LaptopGaming extends Laptop {
         echo "<p><strong>Cooler:</strong> " . htmlspecialchars($this->getCooler()) . "</p>";
         echo "<p><strong>Refresh Rate:</strong> " . $this->getRefreshRate() . " Hz</p>";
 
+        // Buttons for editing and deleting
         echo "<form method='post' style='display:inline;'>
                 <input type='hidden' name='edit_index' value='$index'>
                 <button type='submit' class='btn'>Edit</button>

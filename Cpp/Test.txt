@@ -1,0 +1,32 @@
+TUF Gaming Titan
+Asus
+40000000
+Intel Xeon W-1390
+128
+120000
+4
+NVIDIA RTX 5090
+Advanced Liquid Cooling
+300
+
+HP Omen 17
+HP
+22000000
+Intel i7-12700H
+16
+78000
+3
+NVIDIA RTX 3060
+Tempest Cooling
+144
+
+Gigabyte AORUS 15P
+Gigabyte
+23000000
+Intel i7-12700H
+32
+85000
+10
+NVIDIA RTX 3070 Ti
+WINDFORCE Infinity
+165

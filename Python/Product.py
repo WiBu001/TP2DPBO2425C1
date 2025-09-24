@@ -1,11 +1,12 @@
 class Product:
     def __init__(self, id=0, name="", brand="", price=0):
-        self.__id = id
-        self.__name = name
-        self.__brand = brand
-        self.__price = price
+        # Private attributes for product details
+        self.__id = id          # Unique product ID
+        self.__name = name      # Product name
+        self.__brand = brand    # Product brand
+        self.__price = price    # Product price
 
-    # Getter
+    # Getters
     def get_id(self):
         return self.__id
 
@@ -18,7 +19,7 @@ class Product:
     def get_price(self):
         return self.__price
 
-    # Setter
+    # Setters
     def set_name(self, name):
         self.__name = name
 

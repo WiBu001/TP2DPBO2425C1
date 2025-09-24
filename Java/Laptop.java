@@ -1,29 +1,30 @@
 public class Laptop extends Product {
+    // Attributes specific to Laptop
     private String processor;
     private int ram;
     private int battery;
     private int warranty;
 
-    // Constructor default
+    // Default constructor
     public Laptop() {
-        super(); // panggil constructor Product()
+        super(); // call Product() constructor
         this.processor = "";
         this.ram = 0;
         this.battery = 0;
         this.warranty = 0;
     }
 
-    // Constructor dengan parameter
+    // Constructor with parameters
     public Laptop(int id, String name, String brand, int price,
                   String processor, int ram, int battery, int warranty) {
-        super(id, name, brand, price); // panggil constructor Product dengan argumen
+        super(id, name, brand, price); // call Product constructor with arguments
         this.processor = processor;
         this.ram = ram;
         this.battery = battery;
         this.warranty = warranty;
     }
 
-    // Getter
+    // Getters
     public String getProcessor() {
         return processor;
     }
@@ -40,7 +41,7 @@ public class Laptop extends Product {
         return warranty;
     }
 
-    // Setter
+    // Setters
     public void setProcessor(String processor) {
         this.processor = processor;
     }

@@ -2,13 +2,15 @@ from Product import Product
 
 class Laptop(Product):
     def __init__(self, id=0, name="", brand="", price=0, processor="", ram=0, battery=0, warranty=0):
+        # Call parent constructor (Product) to initialize common attributes
         super().__init__(id, name, brand, price)
+        # Private attributes specific to Laptop
         self.__processor = processor
         self.__ram = ram
         self.__battery = battery
         self.__warranty = warranty
 
-    # Getter
+    # Getters
     def get_processor(self):
         return self.__processor
 
@@ -21,7 +23,7 @@ class Laptop(Product):
     def get_warranty(self):
         return self.__warranty
 
-    # Setter
+    # Setters
     def set_processor(self, processor):
         self.__processor = processor
 
@@ -33,5 +35,3 @@ class Laptop(Product):
 
     def set_warranty(self, warranty):
         self.__warranty = warranty
-
-

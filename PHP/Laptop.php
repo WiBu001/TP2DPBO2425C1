@@ -1,13 +1,14 @@
 <?php
-require_once "Product.php"; // Import class Product
+require_once "Product.php"; // Import Product class
 
 class Laptop extends Product {
-    private string $processor;
-    private int $ram;
-    private int $battery;
-    private int $warranty;
+    // Additional properties specific to Laptop
+    private string $processor; // Laptop processor type
+    private int $ram;          // RAM capacity (in GB)
+    private int $battery;      // Battery capacity (in mAh)
+    private int $warranty;     // Warranty period (in years)
 
-    // Constructor default
+    // Constructor with default values
     public function __construct(
         int $id = 0,
         string $name = "",
@@ -16,18 +17,20 @@ class Laptop extends Product {
         string $processor = "",
         int $ram = 0,
         int $battery = 0,
-        int $warranty = 0
+        int $warranty = 0,
+        string $image = ""
     ) {
-        // Panggil constructor parent (Product)
-        parent::__construct($id, $name, $brand, $price);
+        // Call parent constructor (Product)
+        parent::__construct($id, $name, $brand, $price, $image);
 
+        // Initialize Laptop-specific properties
         $this->processor = $processor;
         $this->ram = $ram;
         $this->battery = $battery;
         $this->warranty = $warranty;
     }
 
-    // Getter
+    // Getters (to access private properties)
     public function getProcessor(): string {
         return $this->processor;
     }
@@ -44,7 +47,7 @@ class Laptop extends Product {
         return $this->warranty;
     }
 
-    // Setter
+    // Setters (to modify private properties)
     public function setProcessor(string $processor): void {
         $this->processor = $processor;
     }

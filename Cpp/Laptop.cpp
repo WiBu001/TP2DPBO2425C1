@@ -1,59 +1,65 @@
 #include "Product.cpp"
 
-class Laptop : public Product{
+class Laptop : public Product {
     private:
-        string processor;
-        int ram;
-        int battery;
-        int warranty;
+        string processor;  // Processor type (e.g., Intel i7, AMD Ryzen)
+        int ram;           // RAM size in GB
+        int battery;       // Battery capacity inn mAh
+        int warranty;      // Warranty period in years
     
     public:
-        Laptop() : Product(){
+        // Default constructor
+        Laptop() : Product() {
             this->processor = "";
             this->ram = 0;
             this->battery = 0;
             this->warranty = 0;
         }
 
-        Laptop(int id, string name, string brand, int price, string processor, int ram, int battery, int warranty) : Product(id, name, brand, price){
+        // Parameterized constructor
+        Laptop(int id, string name, string brand, int price, string processor, int ram, int battery, int warranty) 
+            : Product(id, name, brand, price) {
             this->processor = processor;
             this->ram = ram;
             this->battery = battery;
             this->warranty = warranty;
         }
 
-        string getProcessor(){
+        // Getters
+        string getProcessor() {
             return this->processor;
         }
 
-        int getRam(){
+        int getRam() {
             return this->ram;
         }
 
-        int getBattery(){
+        int getBattery() {
             return this->battery;
         }
 
-        int getWarranty(){
+        int getWarranty() {
             return this->warranty;
         }
 
-        void setProcessor(string processor){
+        // Setters
+        void setProcessor(string processor) {
             this->processor = processor;
         }
 
-        void setRam(int ram){
+        void setRam(int ram) {
             this->ram = ram;
         }
 
-        void setBattery(int battery){
+        void setBattery(int battery) {
             this->battery = battery;
         }
 
-        void setWarranty(int warranty){
+        void setWarranty(int warranty) {
             this->warranty = warranty;
         }
 
-        ~Laptop(){
+        // Destructor
+        ~Laptop() {
         }
 };

@@ -3,28 +3,32 @@ import java.util.Scanner;
 
 public class Main {
 
+    // Method to clear the console screen
     private static void clearScreen() {
-        System.out.print("\033[H\033[2J");
+        System.out.print("\033[H\033[2J"); // ANSI escape codes to clear terminal
     }
 
+    // Scanner for user input
     static Scanner sc = new Scanner(System.in);
 
+    // Function to count number of digits in an integer
     static int countDigit(int number) {
         return String.valueOf(number).length();
     }
 
+    // Display the laptop gaming catalogue in a formatted table
     public static void displayCatalogue(ArrayList<LaptopGaming> catalogue) {
         if (catalogue.isEmpty()) {
             System.out.println("Catalogue masih kosong!");
             return;
         }
 
-        // Default lebar minimal kolom
+        // Default minimum column widths
         int maxID = 2, maxName = 12, maxBrand = 5, maxPrice = 5;
         int maxProcessor = 9, maxRam = 5, maxBattery = 7, maxWarranty = 7;
         int maxGPU = 3, maxCooler = 6, maxRefresh = 12;
 
-        // Cari panjang maksimum dari data
+        // Calculate maximum width for each column based on catalogue data
         for (LaptopGaming lap : catalogue) {
             maxID = Math.max(maxID, String.valueOf(lap.getId()).length());
             maxName = Math.max(maxName, lap.getName().length());
@@ -39,7 +43,7 @@ public class Main {
             maxRefresh = Math.max(maxRefresh, (String.valueOf(lap.getRefreshRate()) + " Hz").length());
         }
 
-        // Buat format string dinamis
+        // Create dynamic format string for printing table
         String format = "| %-" + maxID + "s"
                 + " | %-" + maxName + "s"
                 + " | %-" + maxBrand + "s"
@@ -52,12 +56,12 @@ public class Main {
                 + " | %-" + maxCooler + "s"
                 + " | %-" + maxRefresh + "s |\n";
 
-        // Cetak header
+        // Print table header
         printLine(maxID, maxName, maxBrand, maxPrice, maxProcessor, maxRam, maxBattery, maxWarranty, maxGPU, maxCooler, maxRefresh);
         System.out.printf(format, "ID", "Nama Laptop", "Brand", "Harga", "Processor", "RAM", "Baterai", "Garansi", "GPU", "Cooler", "Refresh Rate");
         printLine(maxID, maxName, maxBrand, maxPrice, maxProcessor, maxRam, maxBattery, maxWarranty, maxGPU, maxCooler, maxRefresh);
 
-        // Cetak isi tabel
+        // Print table rows (catalogue data)
         for (LaptopGaming lap : catalogue) {
             System.out.printf(format,
                     lap.getId(),
@@ -72,9 +76,11 @@ public class Main {
                     lap.getCooler(),
                     lap.getRefreshRate() + " Hz");
         }
+        // Print closing line
         printLine(maxID, maxName, maxBrand, maxPrice, maxProcessor, maxRam, maxBattery, maxWarranty, maxGPU, maxCooler, maxRefresh);
     }
 
+    // Print a separator line for the table based on column widths
     private static void printLine(int... widths) {
         StringBuilder sb = new StringBuilder("+");
         for (int w : widths) {
@@ -83,6 +89,7 @@ public class Main {
         System.out.println(sb);
     }
 
+    // Add a new laptop to the catalogue (with user input)
     static void addLaptop(ArrayList<LaptopGaming> catalogue, int[] idCounter) {
         sc.nextLine(); // flush newline
         System.out.print("Nama Laptop: ");
@@ -106,12 +113,14 @@ public class Main {
         System.out.print("Refresh Rate (Hz): ");
         int refreshRate = sc.nextInt();
 
+        // Add new LaptopGaming object to catalogue
         catalogue.add(new LaptopGaming(idCounter[0]++, name, brand, price,
                 processor, ram, battery, warranty, gpu, cooler, refreshRate));
 
         System.out.println("Laptop berhasil ditambahkan!");
     }
 
+    // Display main menu options
     static void menu() {
         System.out.println("=============================================");
         System.out.println("            CATALOGUE LAPTOP GAMING          ");
@@ -122,44 +131,47 @@ public class Main {
         System.out.println("=============================================");
     }
 
+    // Main method
     public static void main(String[] args) {
         ArrayList<LaptopGaming> catalogue = new ArrayList<>();
-        int[] id = {1};
+        int[] id = {1}; // counter for auto-increment laptop IDs
 
-        // Dummy data
+        // Add dummy data to catalogue
         catalogue.add(new LaptopGaming(id[0]++, "ROG Strix G18", "Asus", 25000000, "Intel i9-13900HX", 32, 9000, 2, "RTX 4080", "Liquid Cooling", 240));
         catalogue.add(new LaptopGaming(id[0]++, "Predator Helios 16", "Acer", 22000000, "Intel i7-13700HX", 16, 8000, 2, "RTX 4070", "AeroBlade 3D", 165));
         catalogue.add(new LaptopGaming(id[0]++, "Legion Pro 7", "Lenovo", 23000000, "AMD Ryzen 9 7945HX", 32, 9900, 3, "RTX 4090", "ColdFront 5.0", 240));
         catalogue.add(new LaptopGaming(id[0]++, "Alienware m18", "Dell", 28000000, "Intel i9-13980HX", 64, 10000, 3, "RTX 4090", "Cryo-Tech", 480));
         catalogue.add(new LaptopGaming(id[0]++, "MSI Raider GE78", "MSI", 24000000, "Intel i9-13950HX", 32, 9500, 2, "RTX 4080", "Cooler Boost 5", 240));
 
+        // Main loop
         clearScreen();
         int choice;
         do {
-            menu();
+            menu(); // show menu
             System.out.print("Masukkan pilihan anda : ");
             choice = sc.nextInt();
 
             switch (choice) {
-                case 1 -> addLaptop(catalogue, id);
+                case 1 -> addLaptop(catalogue, id); // add new laptop
                 case 2 -> {
                     if (catalogue.isEmpty()) {
                         System.out.println("Catalogue masih kosong!");
                     } else {
                         clearScreen();
-                        displayCatalogue(catalogue);
+                        displayCatalogue(catalogue); // show table
                     }
                 }
-                case 3 -> System.out.println("Keluar dari program...");
-                default -> System.out.println("Pilihan tidak valid");
+                case 3 -> System.out.println("Keluar dari program..."); // exit
+                default -> System.out.println("Pilihan tidak valid");   // invalid choice
             }
 
+            // Wait for ENTER before continuing (except when exiting)
             if (choice != 3) {
                 System.out.println("\nTekan ENTER untuk melanjutkan...");
                 sc.nextLine(); // flush
-                sc.nextLine(); // tunggu enter
+                sc.nextLine(); // wait for enter
                 clearScreen();
             }
-        } while (choice != 3);
+        } while (choice != 3); // loop until exit
     }
 }

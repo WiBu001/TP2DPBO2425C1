@@ -1,25 +1,28 @@
 public class LaptopGaming extends Laptop {
-    private String gpu;
-    private String cooler;
-    private int refreshRate;
+    // Attributes specific to gaming laptops
+    private String gpu;        // graphics card
+    private String cooler;     // cooling system
+    private int refreshRate;   // screen refresh rate (Hz)
 
-    // Constructor default
+    // Default constructor
     public LaptopGaming() {
-        super(); // panggil constructor Laptop
+        super(); // call Laptop constructor
         this.gpu = "";
         this.cooler = "";
         this.refreshRate = 0;
     }
 
-    // Constructor dengan parameter
-    public LaptopGaming(int id, String name, String brand, int price, String processor, int ram, int battery, int warranty, String gpu, String cooler, int refreshRate) {
-        super(id, name, brand, price, processor, ram, battery, warranty);
+    // Constructor with parameters
+    public LaptopGaming(int id, String name, String brand, int price,
+                        String processor, int ram, int battery, int warranty,
+                        String gpu, String cooler, int refreshRate) {
+        super(id, name, brand, price, processor, ram, battery, warranty); // call Laptop constructor with arguments
         this.gpu = gpu;
         this.cooler = cooler;
         this.refreshRate = refreshRate;
     }
 
-    // Getter
+    // Getters
     public String getGpu() {
         return gpu;
     }
@@ -32,7 +35,7 @@ public class LaptopGaming extends Laptop {
         return refreshRate;
     }
 
-    // Setter
+    // Setters
     public void setGpu(String gpu) {
         this.gpu = gpu;
     }

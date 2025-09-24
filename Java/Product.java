@@ -1,10 +1,11 @@
 public class Product {
-    private int id;
-    private String name;
-    private String brand;
-    private int price;
+    // Common attributes for all products
+    private int id;        // unique identifier
+    private String name;   // product name
+    private String brand;  // product brand
+    private int price;     // product price
 
-    // Constructor default
+    // Default constructor
     public Product() {
         this.id = 0;
         this.name = "";
@@ -12,7 +13,7 @@ public class Product {
         this.price = 0;
     }
 
-    // Constructor dengan parameter
+    // Constructor with parameters
     public Product(int id, String name, String brand, int price) {
         this.id = id;
         this.name = name;
@@ -20,7 +21,7 @@ public class Product {
         this.price = price;
     }
 
-    // Getter
+    // Getters
     public int getId() {
         return this.id;
     }
@@ -37,7 +38,7 @@ public class Product {
         return this.price;
     }
 
-    // Setter
+    // Setters
     public void setName(String name) {
         this.name = name;
     }
@@ -49,5 +50,4 @@ public class Product {
     public void setPrice(int price) {
         this.price = price;
     }
-
 }

@@ -1,14 +1,14 @@
 <?php
 
-require_once "LaptopGaming.php"; // Import class LaptopGaming
+require_once "LaptopGaming.php"; // Import LaptopGaming class
 
-// Uncomment these two lines if you want to reset/clear the session data
+// Uncomment these lines if you want to reset/clear session data
 // session_start();
 // session_destroy();
 
-session_start(); // Mulai session
+session_start(); // Start session to store data across requests
 
-// === Inisialisasi dummy data (jika session kosong) ===
+// === Initialize dummy data (only if session is empty) ===
 if (!isset($_SESSION['laptops'])) {
     $_SESSION['laptops'] = [
         new LaptopGaming(1, "ROG Strix G16", "ASUS", 25000000, "Intel i9-13980HX", 32, 90, 2, "NVIDIA RTX 4080", "Liquid Metal Cooling", 240, "ROG Strix G16.png"),
@@ -19,9 +19,9 @@ if (!isset($_SESSION['laptops'])) {
     ];
 }
 
-// === Tambah LaptopGaming baru ===
+// === Add new LaptopGaming ===
 if (isset($_POST['add'])) {
-    $id = time(); // ID unik
+    $id = time(); // Use current timestamp as unique ID
     $name = $_POST['name'];
     $brand = $_POST['brand'];
     $price = $_POST['price'];
@@ -33,36 +33,38 @@ if (isset($_POST['add'])) {
     $cooler = $_POST['cooler'];
     $refreshRate = $_POST['refreshRate'];
 
+    // Handle image upload
     $imageName = "";
     if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-        if (!is_dir("uploads")) mkdir("uploads");
+        if (!is_dir("uploads")) mkdir("uploads"); // Create uploads folder if not exists
         $imageName = uniqid() . "_" . basename($_FILES["image"]["name"]);
         move_uploaded_file($_FILES["image"]["tmp_name"], "uploads/" . $imageName);
     }
 
-     $_SESSION['laptops'][] = new LaptopGaming(
+    // Save new laptop into session
+    $_SESSION['laptops'][] = new LaptopGaming(
         $id, $name, $brand, $price,
         $processor, $ram, $battery, $warranty,
         $gpu, $cooler, $refreshRate,
         $imageName
     );
 
-    header("Location: index.php");
+    header("Location: index.php"); // Refresh to prevent resubmission
     exit;
 }
 
-// === Hapus LaptopGaming ===
+// === Delete LaptopGaming ===
 if (isset($_POST['delete_index'])) {
     $index = $_POST['delete_index'];
     if (isset($_SESSION['laptops'][$index])) {
-        unset($_SESSION['laptops'][$index]);
-        $_SESSION['laptops'] = array_values($_SESSION['laptops']); // reindex array
+        unset($_SESSION['laptops'][$index]); // Remove from session
+        $_SESSION['laptops'] = array_values($_SESSION['laptops']); // Reindex array
     }
     header("Location: index.php");
     exit;
 }
 
-// === Edit mode ===
+// === Edit mode setup ===
 $editMode = false;
 $editIndex = -1;
 
@@ -71,10 +73,11 @@ if (isset($_POST['edit_index'])) {
     $editIndex = $_POST['edit_index'];
 }
 
-// === Update LaptopGaming ===
+// === Update existing LaptopGaming ===
 if (isset($_POST['update'])) {
     $index = $_POST['update_index'];
     if (isset($_SESSION['laptops'][$index])) {
+        // Update all attributes
         $_SESSION['laptops'][$index]->setName($_POST['name']);
         $_SESSION['laptops'][$index]->setBrand($_POST['brand']);
         $_SESSION['laptops'][$index]->setPrice($_POST['price']);
@@ -86,7 +89,7 @@ if (isset($_POST['update'])) {
         $_SESSION['laptops'][$index]->setCooler($_POST['cooler']);
         $_SESSION['laptops'][$index]->setRefreshRate($_POST['refreshRate']);
 
-        // update gambar
+        // Handle new image upload if provided
         if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
             $imageName = uniqid() . "_" . basename($_FILES["image"]["name"]);
             move_uploaded_file($_FILES["image"]["tmp_name"], "uploads/" . $imageName);
@@ -97,7 +100,7 @@ if (isset($_POST['update'])) {
     exit;
 }
 
-// === Pencarian ===
+// === Search laptops by name or brand ===
 $laptops = $_SESSION['laptops'];
 $searchQuery = "";
 if (isset($_GET['search'])) {
@@ -113,6 +116,7 @@ if (isset($_GET['search'])) {
 <head>
     <title>Laptop Gaming Store</title>
     <style>
+        /* Basic styling */
         body { font-family: Arial, sans-serif; background: #f4f4f9; padding: 20px; text-align: center; }
         h1 { margin-bottom: 20px; }
         .container { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
@@ -128,8 +132,9 @@ if (isset($_GET['search'])) {
 <body>
     <h1>Laptop Gaming Store</h1>
 
+    <!-- Form for adding/updating laptop -->
     <div class="form-container">
-        <h2><?= $editMode ? "Edit Laptop Gaming" : "Tambah Laptop Gaming"; ?></h2>
+        <h2><?= $editMode ? "Edit Laptop Gaming" : "Add Laptop Gaming"; ?></h2>
         <form method="post" enctype="multipart/form-data">
             <input type="text" name="name" placeholder="Name" value="<?= $editMode ? $laptops[$editIndex]->getName() : ''; ?>" required><br>
             <input type="text" name="brand" placeholder="Brand" value="<?= $editMode ? $laptops[$editIndex]->getBrand() : ''; ?>" required><br>
@@ -142,20 +147,22 @@ if (isset($_GET['search'])) {
             <input type="text" name="cooler" placeholder="Cooler" value="<?= $editMode ? $laptops[$editIndex]->getCooler() : ''; ?>" required><br>
             <input type="number" name="refreshRate" placeholder="Refresh Rate (Hz)" value="<?= $editMode ? $laptops[$editIndex]->getRefreshRate() : ''; ?>" required><br>
             
-            <!-- Upload gambar -->
+            <!-- Image upload field -->
             <input type="file" name="image" accept="image/*"><br>
 
             <?php if ($editMode): ?>
+                <!-- Update button in edit mode -->
                 <input type="hidden" name="update_index" value="<?= $editIndex; ?>">
                 <button type="submit" name="update" class="btn">Update</button>
                 <a href="index.php" class="btn red">Cancel</a>
             <?php else: ?>
+                <!-- Add button in add mode -->
                 <button type="submit" name="add" class="btn">Add</button>
             <?php endif; ?>
         </form>
     </div>
 
-    <!-- Search -->
+    <!-- Search bar -->
     <div class="search-box">
         <form method="get">
             <input type="text" name="search" placeholder="Search by name or brand" value="<?= htmlspecialchars($searchQuery); ?>">
@@ -163,15 +170,15 @@ if (isset($_GET['search'])) {
         </form>
     </div>
 
-    <!-- List LaptopGaming -->
-    <h2>All Laptop Gaming</h2>
+    <!-- Display all laptops -->
+    <h2>All Gaming Laptops</h2>
     <div class="container">
         <?php
         if (empty($laptops)) {
             echo "<p>No laptops available.</p>";
         } else {
             foreach ($laptops as $index => $laptop) {
-                $laptop->displayCard($index);
+                $laptop->displayCard($index); // Show each laptop card
             }
         }
         ?>

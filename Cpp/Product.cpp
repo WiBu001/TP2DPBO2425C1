@@ -2,56 +2,62 @@
 #include<string>
 using namespace std;
 
-class Product{
+// Base class: Product
+class Product {
 private:
-    int id;
-    string name;
-    string brand;
-    int price;
+    int id;         // Unique product ID
+    string name;    // Name of the product
+    string brand;   // Brand of the product
+    int price;      // Price of the product
 
 public:
-    Product(){
+    // Default constructor (initializes attributes with default values)
+    Product() {
         this->id = 0;
         this->name = "";
         this->brand = "";
         this->price = 0;
     }
 
-    Product(int id, string name, string brand, int price){
+    // Parameterized constructor (allows initialization with specific values)
+    Product(int id, string name, string brand, int price) {
         this->id = id;
         this->name = name;
         this->brand = brand;
         this->price = price;
     }
 
-    int getId(){
+    // Getter methods (to access private attributes)
+    int getId() {
         return this->id;
     }
 
-    string getName(){
+    string getName() {
         return this->name;
     }
 
-    string getBrand(){
+    string getBrand() {
         return this->brand;
     }
 
-    int getPrice(){
+    int getPrice() {
         return this->price;
     }
 
-    void setName(string name){
+    // Setter methods (to modify private attributes)
+    void setName(string name) {
         this->name = name;
     }
 
-    void setBrand(string brand){
+    void setBrand(string brand) {
         this->brand = brand;
     }
 
-    void setPrice(int price){
+    void setPrice(int price) {
         this->price = price;
     }
 
-    ~Product(){
+    // Destructor
+    ~Product() {
     };
 };
